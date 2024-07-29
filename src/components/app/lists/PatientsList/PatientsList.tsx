@@ -1,4 +1,4 @@
-import  React, { useState } from 'react';
+import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import {
     GroupingState,
@@ -10,7 +10,7 @@ import {
     IntegratedSelection,
     IntegratedFiltering,
     SortingState,
-    IntegratedSorting,
+    IntegratedSorting, Sorting,
 } from '@devexpress/dx-react-grid';
 import {
     Grid,
@@ -25,87 +25,71 @@ import {
     Toolbar,
     PagingPanel,
 } from '@devexpress/dx-react-grid-material-ui';
+import { handleSortingChange } from "./sorting/SortingUtils";
+import {patientColumns} from "./providers/providerColumns";
+import Patient, {Fields} from "../../../../states/common/classes/Patient";
+import {defaultListExtensions} from "./defaults";
+import {RootState} from "../../../../states/store/ProjectStore";
+import {useSelector} from "react-redux";
+import PatientFieldProvider from "./providers/PatientFieldProvider";
+import FilterCell from "./filters/FilterCell";
 
-import { generateRows } from './demo-data/generator';
+const MyTableComponent = () => {
+    console.log('21');
+    const patients: Patient[] = useSelector((state: RootState) => state.patients.items);
+    // const patients: Patient[] = useSelector((state: RootState) => state.)
+    console.log('22', patients);
+    const [columns] = useState(
+        patientColumns.map(item => ({
+            name: item.toString(),
+            title: Patient.columnTitleCallBack(item), ///???
+        }))
+    );
+    const [sorting, setSorting] = useState<Sorting[]>([]);
+    const [pageSizes] = useState<number[]>([10, 25, 50, 100, 0]);
 
-export default () => {
-    const [columns] = useState([
-        { name: 'name', title: 'ФИО' },
-        { name: 'gender', title: 'Gender' },
-        { name: 'city', title: 'City' },
-        { name: 'car', title: 'Car' },
-    ]);
-    const [rows] = useState(generateRows({ length: 40 }));
-    const [selection, setSelection] = useState([]);
-    const [grouping, setGrouping] = useState([]);
-    const [sorting, setSorting] = useState([]);
-    const [pageSizes] = useState([10, 25,50,100, 0]);
-
-    const handleSortingChange = (newSorting) => {
-        if (newSorting.length === 0) {
-            setSorting([]);
-        } else {
-            const columnName = newSorting[0].columnName;
-            const direction = sorting.find(s => s.columnName === columnName)?.direction;
-            if (direction === 'asc') {
-                setSorting([{ columnName, direction: 'desc' }]);
-            } else if (direction === 'desc') {
-                setSorting([]);
-            } else {
-                setSorting(newSorting);
-            }
-        }
+    const onSortingChange = (newSorting: Sorting[]) => {
+        handleSortingChange(newSorting, sorting, setSorting);
     };
 
     return (
-        <div>
             <Paper>
-                <Grid
-                    rows={rows}
-                    columns={columns}
-                >
-                    <DragDropProvider/>
-                    <SortingState
-                        sorting={sorting}
-                        onSortingChange={handleSortingChange}
-                    />
-                    <GroupingState
-                        grouping={grouping}
-                        onGroupingChange={setGrouping}
-                    />
-                    <SelectionState
-                        selection={selection}
-                        onSelectionChange={setSelection}
-                    />
+                <Grid rows={patients} columns={columns}>
+                    <DragDropProvider />
+                    <SortingState sorting={sorting} onSortingChange={onSortingChange} />
+                    <GroupingState columnExtensions={defaultListExtensions.disableGroupColumn} />
                     <PagingState
                         defaultCurrentPage={0}
-                        defaultPageSize={10}
+                        defaultPageSize={25}
                     />
-
-
-                    <FilteringState/>
-
-
-                    <IntegratedPaging/>
-                    <IntegratedGrouping/>
-                    <IntegratedSelection/>
-                    <IntegratedFiltering/>
-                    <IntegratedSorting/>
-                    {/*<Table/>*/}
-                    <VirtualTable/>
-                    <TableHeaderRow showSortingControls/>
-                    <TableFilterRow/>
-                    <TableSelection showSelectAll/>
-                    <TableGroupRow/>
-                    <Toolbar/>
-                    <GroupingPanel/>
-                    <PagingPanel
-                        pageSizes={pageSizes}
+                    <PatientFieldProvider for={[Fields.PENSION.toString()]} />
+                    <FilteringState />
+                    <IntegratedPaging />
+                    <IntegratedGrouping />
+                    <IntegratedFiltering
+                        columnExtensions={defaultListExtensions.integratedFilteringColumnExtensions}
                     />
+                    <IntegratedSorting />
+                    <VirtualTable messages={defaultListExtensions.tableMessages} />
+                    <TableGroupRow />
+                    <Toolbar />
+                    <GroupingPanel
+                        showGroupingControls
+                        messages={defaultListExtensions.tableMessages}
+                    />
+                    <TableFilterRow
+                        cellComponent={FilterCell}
+
+                        messages={defaultListExtensions.tableMessages}
+                    />
+                    <TableHeaderRow
+                        showSortingControls
+                        messages={defaultListExtensions.tableMessages}
+                    />
+                    <PagingPanel pageSizes={pageSizes} />
                 </Grid>
             </Paper>
-
-        </div>
-
     );
 };
+
+export default MyTableComponent;

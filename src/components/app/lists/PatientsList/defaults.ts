@@ -1,4 +1,6 @@
 import { Fields } from '../../../../states/common/classes/Patient';
+import birthdatePredicate from "./predicates/birthdatePredicate";
+import stringPredicate from "./predicates/stringPredicate";
 
 export const defaultListExtensions = {
   columns: [
@@ -7,49 +9,33 @@ export const defaultListExtensions = {
     Fields.SEX,
     Fields.PENSION,
   ],
-  columnExtensions: [
+  disableGroupColumn: [
     {
-      columnName: Fields.PATIENT.toString(),
-      width: 362,
-    },
-    {
-      columnName: Fields.ADDRESS.toString(),
-      wordWrapEnabled: true,
-    },
-    {
-      columnName: Fields.COVID.toString(),
-      width: 156,
-    },
-    {
-      columnName: Fields.INFORMING.toString(),
-      width: 166,
-    },
-    {
-      columnName: Fields.MEDICAL_ORGANIZATION_ATTACHMENT.toString(),
-      width: 186,
-    },
-    {
-      columnName: Fields.PLAN_BY_PLACE.toString(),
-      width: 168,
-      wordWrapEnabled: true,
-    },
-    {
-      columnName: Fields.PRIORITY_GROUP.toString(),
-      align: 'center',
-      wordWrapEnabled: true,
-      width: 100,
-    },
-    {
-      columnName: Fields.HEALTH_GROUP.toString(),
-      wordWrapEnabled: true,
-      align: 'center',
-      width: 106,
+      columnName: Fields.FULL_NAME.toString(),
+      groupingEnabled: false,
     },
   ],
+
+  integratedFilteringColumnExtensions: [
+    {
+      columnName: Fields.BIRTH_DATE.toString(),
+      predicate: birthdatePredicate,
+    },
+    {
+      columnName: Fields.PENSION.toString(),
+      predicate: stringPredicate,
+    },
+    {
+      columnName: Fields.SEX.toString(),
+      predicate: stringPredicate,
+    },
+  ],
+
+
   tableMessages: {
     noData: 'Нет данных',
     groupByColumn: 'Перетащите заголовок столбца сюда, чтобы сгруппировать по этому столбцу',
-    filterPlaceholder: 'Фильровать...',
-    sortingHint: 'Сортировать',
+    filterPlaceholder: 'Фильтр',
+    sortingHint: 'Сортировка',
   },
 };

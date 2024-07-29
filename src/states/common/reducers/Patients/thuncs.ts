@@ -5,7 +5,7 @@ import Patient, { IPatient } from '../../classes/Patient';
 import {Dispatch} from "react";
 
 export const getPatientsDictionary = () => {
-  return async (dispatch: Dispatch<any>, getState: IPatient) =>{
+  return async (dispatch: Dispatch<any>) =>{
     const patients: IPatient[] = [
       {
         firstName: 'Сергей',
@@ -18,21 +18,21 @@ export const getPatientsDictionary = () => {
         firstName: 'Анна',
         lastName: 'Иванова',
         middleName: 'Сергеевна',
-        birthday: new Date(1998, 5, 22).getTime(),
+        birthday: new Date(1950, 5, 22).getTime(),
         sex: 0,
       },
       {
         firstName: 'Дмитрий',
         lastName: 'Смирнов',
         middleName: 'Алексеевич',
-        birthday: new Date(1995, 2, 14).getTime(),
+        birthday: new Date(1960, 2, 14).getTime(),
         sex: 1,
       },
       {
         firstName: 'Владислав',
         lastName: 'Богушов',
         middleName: 'Юрьевич',
-        birthday: new Date(2002, 10, 11).getTime(),
+        birthday: new Date(1945, 10, 11).getTime(),
         sex: 1,
       },
       {
@@ -95,7 +95,7 @@ export const getPatientsDictionary = () => {
         firstName: 'Татьяна',
         lastName: 'Волкова',
         middleName: 'Олеговна',
-        birthday: new Date(1991, 0, 29).getTime(),
+        birthday: new Date(1964, 0, 29).getTime(),
         sex: 0,
       },
       {
@@ -116,14 +116,14 @@ export const getPatientsDictionary = () => {
         firstName: 'Максим',
         lastName: 'Васильев',
         middleName: 'Игоревич',
-        birthday: new Date(2002, 5, 11).getTime(),
+        birthday: new Date(1955, 5, 11).getTime(),
         sex: 1,
       },
       {
         firstName: 'Наталья',
         lastName: 'Павлова',
         middleName: 'Викторовна',
-        birthday: new Date(1987, 6, 22).getTime(),
+        birthday: new Date(1960, 6, 22).getTime(),
         sex: 0,
       },
       {

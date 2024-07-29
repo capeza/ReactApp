@@ -1,15 +1,17 @@
 import React, {useEffect} from "react";
-import {setSexDictionary} from "./states/common/reducers/Dictionaries/actions";
 import { useDispatch } from 'react-redux';
-import {setPatientsDictionary} from "./states/common/reducers/Patients/actions";
 import PatientsList from "./components/app/lists/PatientsList/PatientsList";
+import {getSexDictionary} from "./states/common/reducers/Dictionaries/thuncs";
+import {getPatientsDictionary} from "./states/common/reducers/Patients/thuncs";
+import { AppDispatch} from "./states/store/ProjectStore";
+
 
 
 function App(){
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     useEffect(()=>{
-        useDispatch(setSexDictionary());
-        useDispatch(setPatientsDictionary());
+        dispatch(getSexDictionary());
+        dispatch(getPatientsDictionary());
     }, []);
     return (
         <div className="App">

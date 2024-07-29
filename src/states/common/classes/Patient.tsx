@@ -38,8 +38,8 @@ export default class Patient{
     get [Fields.FULL_NAME](): string {
     return (
         (this.lastName ? this.lastName : ' ')+
-        (this.firstName ? this.firstName : ' ')+
-        (this.middleName ? this.middleName : ' ')
+        (this.firstName ? ' ' + this.firstName : ' ')+
+        (this.middleName ? ' ' + this.middleName : ' ')
     )
     }
 
@@ -74,8 +74,8 @@ export default class Patient{
 
 
     getPatientAge(): number{
-        const ageDifference = new Date(Date.now() - this.birthday - 1970)
-        return ageDifference.getFullYear();
+        const ageDifference = new Date(Date.now() - this.birthday)
+        return ageDifference.getFullYear() - 1970;
     }
 
 
