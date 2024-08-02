@@ -1,7 +1,4 @@
-import {
-  ActionTypeMix,
-  SET_SEX_DIC,
-} from './types';
+import { ActionTypeMix, SET_SEX_DIC } from './types';
 import { IDictionaryStorage } from '../../interfaces/IDictionaryStorage';
 import Sex from '../../classes/Sex';
 

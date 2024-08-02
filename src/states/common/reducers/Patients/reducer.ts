@@ -1,5 +1,5 @@
 import { initialState } from './initial';
-import {ActionTypeMix,SET_PATIENTS,} from './types';
+import { ActionTypeMix, SET_PATIENTS } from './types';
 import { IState } from './IState';
 
 export const reducer = (state = initialState, action: ActionTypeMix): IState => {

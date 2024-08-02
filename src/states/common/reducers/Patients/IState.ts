@@ -1,4 +1,4 @@
-import Patient from "../../classes/Patient";
+import Patient from '../../classes/Patient';
 
 export type IPatientStorage = Array<Patient>;
 

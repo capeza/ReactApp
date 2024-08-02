@@ -1,11 +1,9 @@
-import {
-  setPatientsDictionary,
-} from './actions';
 import Patient, { IPatient } from '../../classes/Patient';
-import {Dispatch} from "react";
+import { Dispatch } from 'react';
+import { setPatientsStorage } from './actions';
 
-export const getPatientsDictionary = () => {
-  return async (dispatch: Dispatch<any>) =>{
+export const getPatientsStorage = () => {
+  return async (dispatch: Dispatch<any>) => {
     const patients: IPatient[] = [
       {
         firstName: 'Сергей',
@@ -155,7 +153,6 @@ export const getPatientsDictionary = () => {
         sex: 0,
       },
     ];
-
-    dispatch(setPatientsDictionary(patients.map(item=> new Patient(item))))
+    dispatch(setPatientsStorage(patients.map(item => new Patient(item))));
   };
 };
